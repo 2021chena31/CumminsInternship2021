@@ -1,0 +1,14 @@
+varShiftRateA.csv
+varShiftRateB.csv
+varShiftRateCA.csv
+varShiftRateCE.csv
+varShiftRateCR.csv
+varShiftRateE.csv
+varShiftRateM.csv
+varShiftRateNE.csv
+varShiftRateNP.csv
+varShiftRateNW.csv
+varShiftRatePA.csv
+varShiftRatePSO.csv
+varShiftRatePSY.csv
+varShiftRateR.csv
