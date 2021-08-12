@@ -1,8 +1,9 @@
-This files contains instructions for mainScript.py only.
-v.1.1, last updated 8/10/2021
+This files contains instructions for mainScript.py only. I highly recommend using mainScript2.py instead mainScript.py for large batches.
+
+v.1.1, last updated 8/12/2021
 
 === Author ===
-These following programs are written by Angie Chen, in July-August 2021.
+These following programs are written by Angie Chen (angie.chen@cummins.com), in July-August 2021.
   - mainScript.py
   - script2.py
   - generateNames.py
@@ -47,12 +48,18 @@ In the function call for addDict() in main, you are able to edit the keyIndex (d
 This file is a combination of two programs, both ran seperately during testing, which is why names.txt is needed. If you want, you could change the code so that names.txt is not required for use. 
 
 
+
 === Final Notes ===
-The code is honestly a mess, but I added as much detail as I could so it should hopefully be comprehensible. Feel free to made any edits/share the code, but be sure to make a backup of the current version just in case.
+You are free to reuse any portion of this program for any purpose WITHIN Cummins. 
+
+The code is honestly a mess, but I added as much detail as I could so it should hopefully be comprehensible. Feel free to made any edits/share the code, but be sure to make a backup of the current version just in case. 
 
 In all honestly, I would recommend creating a new program in Python version 3 that makes use of the pyodbc module. 
+
 
 
 == Changelog ==
 v.1.0: 8/9/2021 - uploaded program
 v.1.1: 8/10/2021 - changed some comments (should not impact program)
+v.1.1: 8/12/2021 - README.txt edit only (code not impacted)
+v.1.2: 8/12/2021 - edited exceptions to be more informative

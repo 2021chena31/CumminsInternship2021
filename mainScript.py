@@ -1,5 +1,5 @@
-##Written by Angie Chen, August 2021
-##File v.1.1, last updated 8/10/2021
+##Written by Angie Chen (angie.chen@cummins.com), August 2021
+##File v.1.2, last updated 8/12/2021
 ##
 ##This program combines combineNames.py and script2.py together.
 ##Since it's a combination, there are some parts of the code that may appear
@@ -53,9 +53,10 @@ def pullNames():
     
     except IOError:
         #If this error appears, then names.txt is missing
+        #This should NOT be an issue for this program because names.txt
+        #will always be created
         print("ERROR: Invalid file name in pullNames()")
         print("Please fix error and restart program.")
-        print("Use ctrl-c to halt the program if needed.")
 
 
 
@@ -115,7 +116,9 @@ def addDict(fileName, keyIndex=0, dictionary={}):
         return dictionary
 
     except IOError:
-        print(str(fileName) + " is missing in addDict()")
+        #Not necessarily a bad thing if the file simply does not exist
+        #but notifies user if the program is missing a file
+        print("Notice (addDict): " + str(fileName) + " is missing")
 
 
                 
@@ -151,18 +154,18 @@ def writeDictToFile(dictionary,name='temp.csv'):
         return None
     
     except KeyError:
-        print("No dictionary exist; i.e. no files in fileNames")
+        newF.close()
+        print("ERROR: No dictionary exist; i.e. no files in fileNames")
         
     except IndexError:
         #yeah hopefully this shouldn't happen
         newF.close() #exit out of file
-        print("Error with program index; likely an error in the program.")
-        print("Index Error: File closed")
+        print("ERROR (writeDictToFile): File closed and transfer incomplete")
+        print("Error with program index; possible programming bug")
 
 
 
 if __name__ == '__main__':
-    
     #SUFFIX LIST
     #Suffixes are the ones I used to differentiate the csv files.
     #Feel free to change them as needed

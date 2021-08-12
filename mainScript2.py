@@ -1,5 +1,5 @@
-##Written by Angie Chen, August 2021
-##File v.1.0, last updated 8/10/2021
+##Written by Angie Chen (angie.chen@cummins.com), August 2021
+##File v.1.1, last updated 8/12/2021
 ##
 ##This program is a modified version of mainScript2.py which allows combination
 ##of multiple general files in one go.
@@ -51,9 +51,10 @@ def pullNames():
     
     except IOError:
         #If this error appears, then names.txt is missing
-        print("ERROR: Invalid file name in pullNames()")
+        #This should NOT be an issue for this program because names.txt
+        #will always be created
+        print("ERROR (pullNames): Invalid file name")
         print("Please fix error and restart program.")
-        print("Use ctrl-c to halt the program if needed.")
 
 
 
@@ -113,14 +114,16 @@ def addDict(fileName, dictionary={},keyIndex=0):
         return dictionary
 
     except IOError:
-        print("addDict(): " + str(fileName) + " is missing")
+        #Not necessarily a bad thing if the file simply does not exist
+        #but notifies user if the program is missing a file
+        print("Possible Error (addDict): " + str(fileName) + " is missing")
 
 
                 
-def writeDictToFile(dictionary,name='temp.csv'):
+def writeDictToFile(dictionary,name=''):
     try:
         #create new file with the name selected
-        name = 'zNew-' + name + '.csv'
+        name = PREFIX + name + '.csv'
         newF = open(name, 'w')
 
         #goes through every entry in the dictionary
@@ -144,14 +147,15 @@ def writeDictToFile(dictionary,name='temp.csv'):
         return None
     
     except KeyError:
-        print("No dictionary exist; i.e. no files in fileNames")
+        newF.close()
+        print("ERROR (writeDictToFile): No dictionary exists; ie. no files in fileNames")
         
     except IndexError:
         #yeah hopefully this shouldn't happen
         newF.close() #exit out of file
-        print("Error with program index; likely an error in the program.")
-        print("Index Error: File closed")
-
+        print("ERROR (writeDictToFile): File closed and transfer incomplete")
+        print("Error with program index; possible programming bug")
+        
 
 
 if __name__ == '__main__':
@@ -161,12 +165,18 @@ if __name__ == '__main__':
 
     #COMBINE FILES
     for curFile in filesList:
+        
         #Suffix list:
         #Suffixes are the ones I used to differentiate the csv files.
         #Feel free to change them as needed
         sList = ['A.csv','B.csv','CA.csv','CE.csv','CR.csv','E.csv',
              'M.csv','NE.csv','NP.csv','NW.csv','PA.csv','PSO.csv',
              'PSY.csv','R.csv']
+        
+        #Prefix:
+        #Feel free to chance prefix into whatever is needed
+        PREFIX = 'zNew-'
+        
         curFile = curFile.strip('\n') #remove newlines
         
         sList = textGen(curFile, sList) #generate file names
@@ -183,10 +193,21 @@ if __name__ == '__main__':
         except IOError:
             #If this error appears, then a file in names.txt is not present
             #The program will still work for all of the remaining files
-            print("File is missing in main")
-
-        writeDictToFile(dictionary, curFile) #creates the combined csv file
-        dictionary.clear() #wipe the dictionary
+            print("ERROR (main): " + str(fileName) + " is missing")
+            
+        try:
+            writeDictToFile(dictionary, curFile) #creates the combined csv file
+            dictionary.clear() #wipe the dictionary
+        except TypeError:
+            #No files were parsed or csv files are empty/missing
+            print("ERROR (main): Type - Dictionary is empty; "+
+                  "ie. invalid file "+str(PREFIX)+str(curFile)+'.csv'+" in files.txt")
+            print("File transfer incomplete for "+str(PREFIX)+str(curFile)+'.csv')
+        except AttributeError:
+            #No files were parsed or csv files are empty/missing
+            print("ERROR (main): Attribute - Dictionary is empty; "+
+                  "ie. invalid file in files.txt")
+            print("File transfer incomplete for"+str(PREFIX)+str(curFile)+'.csv')
 
     files.close()
         
